@@ -8,18 +8,6 @@
         <mat-form-field>
           <input
             matInput
-            formControlName="username"
-            placeholder="Username"
-            required
-          />
-          <mat-error *ngIf="registerForm.get('username')?.hasError('required')">
-            El nombre de usuario es obligatorio.
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field>
-          <input
-            matInput
             formControlName="email"
             placeholder="Email"
             type="email"

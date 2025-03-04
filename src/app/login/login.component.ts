@@ -11,6 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -31,7 +32,8 @@ export class LoginComponent {
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required, Validators.email]],
@@ -46,14 +48,31 @@ export class LoginComponent {
   onLogin() {
     if (this.loginForm.valid) {
       const { username, password } = this.loginForm.value;
-      console.log('Username:', username);
-      console.log('Password:', password);
-
-      if (username === 'usuario@example.com' && password === 'contraseña123') {
-        this.router.navigate(['/home']);
-      } else {
-        alert('Credenciales incorrectas');
-      }
+      this.authService.login(username, password).subscribe({
+        next: () => {
+          const token = localStorage.getItem('authToken');
+          if (token) {
+            console.log('Token después de login:', token);
+          }
+          this.authService.getUserProfile().subscribe({
+            next: () => {
+              console.log('Perfil de usuario obtenido');
+              console.log('Userid:', localStorage.getItem('userId'));
+              console.log('username:', localStorage.getItem('username'));
+              alert('Bienvenido ' + localStorage.getItem('username'));
+              this.router.navigate(['/feed']);
+            },
+            error: err => {
+              console.error('Error al obtener perfil', err);
+              alert('Error al obtener perfil');
+            },
+          });
+        },
+        error: error => {
+          console.error('Error en login', error);
+          alert('Credenciales incorrectas');
+        },
+      });
     }
   }
 }

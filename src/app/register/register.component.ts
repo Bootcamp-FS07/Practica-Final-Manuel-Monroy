@@ -11,6 +11,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service'; // Importar el servicio AuthService
 
 @Component({
   selector: 'app-register',
@@ -31,26 +32,29 @@ export class RegisterComponent {
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
     this.registerForm = this.fb.group({
-      username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
-  // Método para manejar el envío del formulario
   onRegister() {
     if (this.registerForm.valid) {
-      const { username, email, password } = this.registerForm.value;
-      console.log('Username:', username);
-      console.log('Email:', email);
-      console.log('Password:', password);
-      // Aquí puedes agregar la lógica para registrar al usuario
+      const { email, password } = this.registerForm.value;
 
-      // Redirige al login después del registro
-      this.router.navigate(['/auth/login']);
+      this.authService.register(email, password).subscribe({
+        next: () => {
+          alert('Usuario registrado correctamente');
+          this.router.navigate(['/auth/login']);
+        },
+        error: err => {
+          alert('Error al registrar usuario');
+          console.error(err);
+        },
+      });
     }
   }
 }
