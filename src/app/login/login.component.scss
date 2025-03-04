@@ -1,0 +1,24 @@
+/* Centrado del contenedor principal */
+.login-container {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  height: 100vh; 
+  width: 100%; 
+}
+
+mat-card {
+  width: 400px; 
+  padding: 20px;
+  box-sizing: border-box; 
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 20px; 
+}
+
+.register-link {
+  margin-top: 10px; 
+  text-align: center;
+}
