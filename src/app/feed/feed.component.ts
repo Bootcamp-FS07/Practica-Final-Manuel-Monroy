@@ -94,7 +94,6 @@ export class FeedComponent implements OnInit {
     this.postService.deletePost(postId).subscribe({
       next: () => {
         this.loadPosts();
-        alert('Post eliminado correctamente');
       },
       error: err => {
         console.error('Error al eliminar el post', err);

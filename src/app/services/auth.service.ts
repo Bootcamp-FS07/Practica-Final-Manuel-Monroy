@@ -1,16 +1,16 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-import { Post } from '../models/register-response.model';  // Ajusta la ruta si es necesario
 import { RegisterResponse } from '../models/register-response.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/auth/login';
-  private profileUrl = 'http://localhost:3000/user/profile/';
-  private signupUrl = 'http://localhost:3000/auth/signup';
+  private apiUrlLogin = environment.apiUrl + '/auth/login';
+  private profileUrl = environment.apiUrl + '/user/profile/';
+  private signupUrl = environment.apiUrl + '/auth/signup';
   private http = inject(HttpClient);
 
   login(
@@ -18,7 +18,7 @@ export class AuthService {
     password: string
   ): Observable<{ access_token: string }> {
     return this.http
-      .post<{ access_token: string }>(this.apiUrl, { username, password })
+      .post<{ access_token: string }>(this.apiUrlLogin, { username, password })
       .pipe(
         tap(response => {
           localStorage.setItem('authToken', response.access_token);
@@ -58,11 +58,5 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     return !!localStorage.getItem('authToken');
-  }
-
-  getPosts(): Observable<Post[]> {
-    const token = localStorage.getItem('authToken');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<Post[]>(this.apiUrl, { headers });
   }
 }
