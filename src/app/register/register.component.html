@@ -25,7 +25,7 @@
           <input
             matInput
             formControlName="password"
-            placeholder="Password"
+            placeholder="Contraseña"
             type="password"
             required
           />
@@ -36,6 +36,24 @@
             *ngIf="registerForm.get('password')?.hasError('minlength')"
           >
             La contraseña debe tener al menos 6 caracteres.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input
+            matInput
+            formControlName="confirmPassword"
+            placeholder="Repite la contraseña"
+            type="password"
+            required
+          />
+          <mat-error
+            *ngIf="registerForm.get('confirmPassword')?.hasError('required')"
+          >
+            Debes repetir la contraseña.
+          </mat-error>
+          <mat-error *ngIf="registerForm.hasError('passwordsDoNotMatch')">
+            Las contraseñas no coinciden.
           </mat-error>
         </mat-form-field>
 

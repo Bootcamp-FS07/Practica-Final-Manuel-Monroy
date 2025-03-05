@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
+import { Post } from '../models/register-response.model';  // Ajusta la ruta si es necesario
 import { RegisterResponse } from '../models/register-response.model';
 
 @Injectable({
@@ -11,7 +12,7 @@ export class AuthService {
   private profileUrl = 'http://localhost:3000/user/profile/';
   private signupUrl = 'http://localhost:3000/auth/signup';
   private http = inject(HttpClient);
-  //public staticToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1hbnVlbDExQGdtYWlsLmNvbSIsInN1YiI6IjY3YzZmZGMyYzk0ZjMyNWZmNWY0OGNkNiIsImlhdCI6MTc0MTA5NDM4OSwiZXhwIjoxNzQxMTA1MTg5fQ.7GPoFAaL-RlQM9bxkyTvSU_S6eaJocAeIlE94tsmkag';
+
   login(
     username: string,
     password: string
@@ -57,5 +58,11 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     return !!localStorage.getItem('authToken');
+  }
+
+  getPosts(): Observable<Post[]> {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<Post[]>(this.apiUrl, { headers });
   }
 }

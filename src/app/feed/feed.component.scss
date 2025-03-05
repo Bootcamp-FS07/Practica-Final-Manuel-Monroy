@@ -1,100 +1,119 @@
+$primary-color: #007bff;
+$primary-hover: #0056b3;
+$header-bg: #1976d2;
+$text-color: #333;
+$secondary-text: #888;
+$border-color: #ccc;
+$light-bg: #f9f9f9;
+$button-bg: #f1f1f1;
+
+$border-radius: 5px;
+$spacing: 10px;
+
+body {
+  background-color: $light-bg;
+  color: $text-color;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
 .feed {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  
-  .feed-header {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .feed-header h1 {
-    font-size: 2rem;
-    color: #333;
-  }
-  
-  .post-form {
-    width: 100%;
-    margin-bottom: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .post-form textarea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.feed-header {
+  text-align: center;
+  margin-bottom: 20px;
+  background: $header-bg;
+  color: white;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.post-form {
+  width: 100%;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  textarea {
     width: 100%;
     max-width: 600px;
-    padding: 10px;
+    padding: $spacing;
     font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
     resize: none;
     margin-bottom: 15px;
     box-sizing: border-box;
   }
-  
-  .post-form button {
+
+  button {
     width: 100%;
     max-width: 200px;
-    padding: 10px;
-    background-color: #007bff;
+    padding: $spacing;
+    background-color: $primary-color;
     color: white;
     font-size: 1rem;
     border: none;
-    border-radius: 5px;
+    border-radius: $border-radius;
     cursor: pointer;
     transition: background-color 0.3s;
+
+    &:hover {
+      background-color: $primary-hover;
+    }
   }
-  
-  .post-form button:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Post Styles */
-  .post {
-    width: 100%;
-    max-width: 600px;
-    margin-bottom: 20px;
-    padding: 15px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
+}
+
+.post {
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: $light-bg;
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
   .post-user {
     font-weight: bold;
     margin-bottom: 10px;
   }
-  
+
   .post-content {
     font-size: 1rem;
     margin-bottom: 10px;
-    color: #333;
+    color: $text-color;
   }
-  
+
   .post-date {
     font-size: 0.875rem;
-    color: #888;
+    color: $secondary-text;
     text-align: right;
   }
-  
-  /* Responsiveness */
-  @media (max-width: 768px) {
-    .post-form textarea {
-      max-width: 100%;
-    }
-  
-    .post-form button {
-      max-width: 100%;
-    }
-  
-    .post {
-      max-width: 100%;
-    }
+}
+
+.logout-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  background-color: $button-bg;
+  border: none;
+  cursor: pointer;
+  border-radius: $border-radius;
+
+  mat-icon {
+    font-size: 24px;
   }
-  
+}

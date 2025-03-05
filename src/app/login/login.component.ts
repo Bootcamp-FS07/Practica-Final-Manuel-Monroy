@@ -50,26 +50,17 @@ export class LoginComponent {
       const { username, password } = this.loginForm.value;
       this.authService.login(username, password).subscribe({
         next: () => {
-          const token = localStorage.getItem('authToken');
-          if (token) {
-            console.log('Token después de login:', token);
-          }
           this.authService.getUserProfile().subscribe({
             next: () => {
-              console.log('Perfil de usuario obtenido');
-              console.log('Userid:', localStorage.getItem('userId'));
-              console.log('username:', localStorage.getItem('username'));
               alert('Bienvenido ' + localStorage.getItem('username'));
               this.router.navigate(['/feed']);
             },
-            error: err => {
-              console.error('Error al obtener perfil', err);
+            error: () => {
               alert('Error al obtener perfil');
             },
           });
         },
-        error: error => {
-          console.error('Error en login', error);
+        error: () => {
           alert('Credenciales incorrectas');
         },
       });

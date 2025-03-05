@@ -1,0 +1,60 @@
+.dialog-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #3f51b5;
+    text-align: center;
+  }
+  
+  .dialog-content {
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  mat-form-field {
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  textarea.mat-input-element {
+    font-size: 16px;
+    padding: 12px;
+    background-color: #fff;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    width: 100%;
+  }
+  
+  .dialog-actions {
+    padding: 16px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  
+  .cancel-btn {
+    color: #f44336;
+    font-weight: bold;
+    text-transform: uppercase;
+    &:hover {
+      background-color: rgba(244, 67, 54, 0.1);
+    }
+  }
+  
+  .save-btn {
+    background-color: #3f51b5;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    &:disabled {
+      background-color: #b0bec5;
+      color: #fff;
+    }
+    &:hover {
+      background-color: #303f9f;
+    }
+  }
+  
+  button {
+    min-width: 100px;
+  }
+  
