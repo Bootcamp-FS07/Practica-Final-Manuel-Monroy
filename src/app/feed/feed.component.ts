@@ -20,6 +20,12 @@ export class FeedComponent implements OnInit {
   posts: Post[] = [];
   newPost = '';
   userId: string | null = localStorage.getItem('userId');
+  userName: string | null = localStorage.getItem('username');
+  
+  // Paginación
+  currentPage = 1;
+  postsPerPage = 5;
+  paginatedPosts: Post[] = [];
 
   constructor(
     private postService: PostService,
@@ -35,13 +41,19 @@ export class FeedComponent implements OnInit {
     this.postService.getPosts().subscribe({
       next: posts => {
         this.posts = posts;
-        console.log('Posts cargados:', this.posts);
+        this.updatePaginatedPosts();
       },
       error: err => {
         console.error('Error al obtener los posts', err);
         alert('Error al cargar los posts');
       },
     });
+  }
+
+  updatePaginatedPosts() {
+    const startIndex = (this.currentPage - 1) * this.postsPerPage;
+    const endIndex = startIndex + this.postsPerPage;
+    this.paginatedPosts = this.posts.slice(startIndex, endIndex);
   }
 
   addPost() {
@@ -72,6 +84,7 @@ export class FeedComponent implements OnInit {
         const index = this.posts.findIndex(p => p._id === updatedPost._id);
         if (index !== -1) {
           this.posts[index] = updatedPost;
+          this.updatePaginatedPosts();
         }
       }
     });
@@ -107,5 +120,19 @@ export class FeedComponent implements OnInit {
     localStorage.removeItem('userId');
     localStorage.removeItem('username');
     this.router.navigate(['/auth/login']);
+  }
+
+  nextPage() {
+    if (this.currentPage * this.postsPerPage < this.posts.length) {
+      this.currentPage++;
+      this.updatePaginatedPosts();
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updatePaginatedPosts();
+    }
   }
 }

@@ -1,5 +1,5 @@
 <div class="feed-header">
-  <h1>Feed</h1>
+  <h3>{{ userName }}</h3>
   <button class="logout-btn" (click)="logout()">
     <mat-icon>logout</mat-icon>
   </button>
@@ -17,7 +17,7 @@
     <button (click)="addPost()">Agregar Post</button>
   </div>
 
-  <div *ngFor="let post of posts" class="post">
+  <div *ngFor="let post of paginatedPosts" class="post">
     <div class="post-user">{{ post.author.username }}</div>
     <div class="post-content">{{ post.text }}</div>
     <div class="post-date">{{ post.createdAt | date: 'short' }}</div>
@@ -30,5 +30,19 @@
         <mat-icon>delete</mat-icon>
       </button>
     </div>
+  </div>
+
+  <div class="pagination">
+    <button mat-icon-button (click)="prevPage()" [disabled]="currentPage === 1">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <span>Página {{ currentPage }}</span>
+    <button
+      mat-icon-button
+      (click)="nextPage()"
+      [disabled]="currentPage * postsPerPage >= posts.length"
+    >
+      <mat-icon>chevron_right</mat-icon>
+    </button>
   </div>
 </div>
