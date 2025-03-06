@@ -1,59 +1,96 @@
-# ProjectFinal
+# **Feed App - Angular 19 + Angular Material**
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.5.
+A feed-like social networking application where users can post, comment, and manage their posts.
+It implements authentication with an external API and a modern interface with Angular Material.
 
-## Development server
+---
+## **Índice**
+- Technologies
+- Installation
+- Usage
+- Features
+- API Endpoints
+- Styles
 
-To start a local development server, run:
+---
 
-```bash
+## **Technologies**
+- **Angular 19 (Standalone)**
+- **Angular Material**
+- **RxJS**
+- **Authentication with external API**
+- **SCSS for styles**
+
+---
+
+## **Installation**
+1. Clone the repository:
+```sh
+git clone https://github.com/Bootcamp-FS07/Practica-Final-Manuel-Monroy
+cd Practica-Final-Manuel-Monroy
+```
+2. Install dependencies:
+```sh
+npm install
+```
+3. Run the project:
+```sh
 ng serve
 ```
+4. Access the application at `http://localhost:4200`.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
+## **Usage**
+### 1️ **Authentication**
+- Log in with email and password.
+- Authentication token is stored in `localStorage`.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### 2️ **Post Feed**
+- Publish a new post (maximum 200 characters).
+- Edit and delete own posts.
+- View posts from other users.
 
-```bash
-ng generate component component-name
-```
+### 3️ **Comments**
+- Comment on any post.
+- Edit and delete own comments.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### 4️ **Pagination**
+- Navigation between pages of posts with <> buttons.
+---
 
-```bash
-ng generate --help
-```
+## **Features**
+**Login with external API**
+**Post publishing**
+**Comments on posts**
+**Editing and deleting content**
+**Responsive interface with Angular Material**
+**Post pagination**
 
-## Building
+---
 
-To build the project run:
+## **API Endpoints**
+### **Authentication**
+- `POST http://localhost:3000/auth/login` → Returns user token.
+- `GET http://localhost:3000/user/profile/` → Gets authenticated user data.
 
-```bash
-ng build
-```
+### **Posts**
+- `GET http://localhost:3000/posts` → Gets all posts.
+- `POST http://localhost:3000/posts` → Creates a new post.
+- `PUT http://localhost:3000/posts/:id` → Edits a post.
+- `DELETE http://localhost:3000/posts/:id` → Deletes a post.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### **Comments**
+- `GET http://localhost:3000/comment?postId=<postId>` → Get comments on a post.
+- `POST http://localhost:3000/comment` → Add a comment.
+- `PUT http://localhost:3000/comment/:id` → Edit a comment.
+- `DELETE http://localhost:3000/comment/:id` → Delete a comment.
 
-## Running unit tests
+---
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+## **Styles**
+- Theme based on `Angular Material`.
+- Responsive design with `CSS`.
+- Custom styles in `src/styles.scss`.
 
-```bash
-ng test
-```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
