@@ -1,0 +1,16 @@
+<mat-dialog-content>
+  <mat-form-field appearance="fill" class="full-width">
+    <textarea
+      matInput
+      placeholder="Editar tu post"
+      [(ngModel)]="postText"
+      rows="4"
+      required
+    ></textarea>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button (click)="onSave()" [disabled]="!postText">Editar</button>
+</mat-dialog-actions>
