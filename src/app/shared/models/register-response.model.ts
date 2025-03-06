@@ -1,6 +1,3 @@
-// models.ts
-
-// Respuesta de registro
 export interface RegisterResponse {
   _id: string;
   username: string;
@@ -16,6 +13,15 @@ export interface Author {
   __v: number;
 }
 
+export interface Comment {
+  _id: string;
+  text: string;
+  author: Author;
+  post: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
 export interface Post {
   _id: string;
   text: string;
@@ -23,4 +29,5 @@ export interface Post {
   createdAt: string;
   updatedAt: string;
   __v: number;
+  comments?: Comment[];
 }

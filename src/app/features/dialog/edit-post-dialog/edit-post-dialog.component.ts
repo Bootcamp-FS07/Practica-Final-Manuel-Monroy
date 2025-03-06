@@ -1,10 +1,10 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button'; // Asegúrate de importar estos módulos
+import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
-import { PostService } from '../services/post.service';
-import { Post } from '../models/register-response.model';
+import { PostService } from '../../../core/services/post.service';
+import { Post } from '../../../shared/models/register-response.model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 

@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Post } from '../models/register-response.model';
-import { PostService } from '../services/post.service';
+import { Post, Comment } from '../../shared/models/register-response.model';
+import { PostService } from '../../core/services/post.service';
 import { MatDialog } from '@angular/material/dialog';
-import { EditPostDialogComponent } from '../edit-post-dialog/edit-post-dialog.component';
+import { EditPostDialogComponent } from '../dialog/edit-post-dialog/edit-post-dialog.component';
 import { Router } from '@angular/router';
-import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { MatIconModule } from '@angular/material/icon';
+import { AuthService } from '../../core/services/auth.service';
+import { ConfirmDialogComponent } from '../dialog/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-feed',
@@ -21,16 +22,20 @@ export class FeedComponent implements OnInit {
   newPost = '';
   userId: string | null = localStorage.getItem('userId');
   userName: string | null = localStorage.getItem('username');
-  
+
   // Paginación
   currentPage = 1;
   postsPerPage = 5;
   paginatedPosts: Post[] = [];
 
+  comments: Record<string, Comment[]> = {};
+  newComment: Record<string, string> = {};
+
   constructor(
     private postService: PostService,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -115,13 +120,6 @@ export class FeedComponent implements OnInit {
     });
   }
 
-  logout() {
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('userId');
-    localStorage.removeItem('username');
-    this.router.navigate(['/auth/login']);
-  }
-
   nextPage() {
     if (this.currentPage * this.postsPerPage < this.posts.length) {
       this.currentPage++;
@@ -134,5 +132,101 @@ export class FeedComponent implements OnInit {
       this.currentPage--;
       this.updatePaginatedPosts();
     }
+  }
+
+  loadComments(postId: string) {
+    this.postService.getComments(postId).subscribe({
+      next: (comments: Comment[]) => {
+        this.comments[postId] = comments;
+      },
+      error: err => {
+        console.error(`Error al obtener comentarios del post ${postId}`, err);
+      },
+    });
+  }
+
+  toggleComments(postId: string) {
+    if (this.comments[postId]) {
+      delete this.comments[postId];
+    } else {
+      this.loadComments(postId);
+    }
+  }
+
+  addComment(postId: string) {
+    if (!this.newComment[postId] || this.newComment[postId].trim() === '')
+      return;
+    this.postService.addComment(postId, this.newComment[postId]).subscribe({
+      next: () => {
+        this.loadComments(postId);
+        this.newComment[postId] = '';
+      },
+      error: err => {
+        console.error('Error al agregar comentario', err);
+        alert('Error al agregar comentario');
+      },
+    });
+  }
+
+  editComment(comment: Comment) {
+    const newText = prompt('Edita tu comentario:', comment.text);
+    if (newText && newText.trim() !== '') {
+      this.postService.updateComment(comment._id, newText).subscribe({
+        next: updatedComment => {
+          comment.text = updatedComment.text; // Actualiza el comentario en la UI
+        },
+        error: err => {
+          console.error('Error al editar comentario', err);
+          alert('No se pudo editar el comentario.');
+        },
+      });
+    }
+  }
+
+  deleteComment(commentId: string, postId: string) {
+    this.postService.deleteComment(commentId).subscribe({
+      next: () => {
+        this.comments[postId] = this.comments[postId].filter(
+          c => c._id !== commentId
+        );
+      },
+      error: err => {
+        console.error('Error al eliminar comentario', err);
+        alert('No se pudo eliminar el comentario.');
+      },
+    });
+  }
+
+  openEditCommentDialog(comment: Comment) {
+    const dialogRef = this.dialog.open(EditPostDialogComponent, {
+      width: '400px',
+      data: { post: comment },
+    });
+
+    dialogRef.afterClosed().subscribe(updatedComment => {
+      if (updatedComment) {
+        comment.text = updatedComment.text;
+      }
+    });
+  }
+
+  openDeleteCommentDialog(commentId: string, postId: string) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '300px',
+      data: {
+        message: '¿Estás seguro de que deseas eliminar este comentario?',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteComment(commentId, postId);
+      }
+    });
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/auth/login']);
   }
 }

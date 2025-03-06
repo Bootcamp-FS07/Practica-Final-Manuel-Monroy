@@ -1,8 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-import { RegisterResponse } from '../models/register-response.model';
-import { environment } from '../../environments/environment';
+import { RegisterResponse } from '../../shared/models/register-response.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',

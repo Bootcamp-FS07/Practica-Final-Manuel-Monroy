@@ -22,17 +22,17 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: $spacing;
   max-width: 800px;
   margin: 0 auto;
 }
 
 .feed-header {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: $spacing;
   background: $header-bg;
   color: white;
-  padding: 10px;
+  padding: $spacing;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -53,7 +53,7 @@ body {
     border: 1px solid $border-color;
     border-radius: $border-radius;
     resize: none;
-    margin-bottom: 15px;
+    margin-bottom: $spacing;
     box-sizing: border-box;
   }
 
@@ -78,7 +78,7 @@ body {
 .post {
   width: 100%;
   max-width: 600px;
-  margin-bottom: 20px;
+  margin-bottom: $spacing;
   padding: 15px;
   background-color: $light-bg;
   border: 1px solid $border-color;
@@ -116,4 +116,39 @@ body {
   mat-icon {
     font-size: 24px;
   }
+}
+
+.comments-section {
+  background-color: #9e9e9e;
+  padding: $spacing;
+  border-radius: $border-radius;
+}
+
+.comment {
+  background-color: #ffffff;
+  border-radius: $border-radius;
+  margin-bottom: $spacing;
+  padding: $spacing;
+  color: $text-color;
+}
+
+.comment strong {
+  color: #5a5a5a;
+}
+
+.comment small {
+  color: #999999;
+}
+
+.add-comment input {
+  width: calc(100% - 100px);
+  padding: 8px;
+  margin-right: $spacing;
+  border-radius: $border-radius;
+  border: 1px solid $border-color;
+}
+
+.add-comment button {
+  padding: 8px 16px;
+  border-radius: $border-radius;
 }
